@@ -5,11 +5,14 @@ import './App.css';
 function App() {
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
+  const [token , setToken] = useState('')
   const [paymentStatus, setPaymentStatus] = useState('');
   const [orderDetails, setOrderDetails] = useState(null);
 
   // Mock mode toggle (for testing without real API calls)
   const [mockMode, setMockMode] = useState(true);
+
+  const handleSetToken = async(token)=>{ setToken(token)}
 
   const handlePayment = async () => {
     try {
@@ -37,7 +40,7 @@ function App() {
           currency: 'INR'
         }, {
           headers:{
-            Authorization:'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NjhhNmE0NC03MTBhLTRmODItYTE4ZC1iZmFiYmExOGU4NDciLCJqdGkiOiJkZTFlNTc2MS02NTEzLTQzOTMtYjg5YS1lYTU1ZTdmN2MxZWMiLCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3NTAxNDM0OTksImV4cCI6MTc1MTA0MzQ5OX0.w-imdeAycuq04z-jzdGi9xUXF5qBoqfis90D8kdR13c'
+            Authorization:`Bearer ${token}`
           }
         });
       }
@@ -130,6 +133,17 @@ function App() {
           Mock Mode (no real API calls)
         </label>
       </div>
+
+        <div className="input-group">
+          <label>Token (JWT):</label>
+          <input
+            type="string"
+            value={token}
+            onChange={(e) => handleSetToken(e.target.value)}
+            placeholder="Enter customer access token"
+            min="1"
+          />
+        </div>
 
       <div className="payment-form">
         <div className="input-group">
